@@ -1,0 +1,12 @@
+<div>
+  <h2>Login</h2>
+  <form action="" method="POST">
+    <fieldset>
+      <label for="username">Username:</label> <input type="text" name="username" id="username" />
+      <label for="password">Password:</label> <input type="password" name="password" id="password" />
+    </fieldset>
+    <fieldset>
+      <input type="submit" id="submit" value="Submit" />
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,29 @@
+<div xmlns:tal="http://axiomstack.com/tale" class="add_content">
+  <h2>Add Topic</h2>
+  <form action="" method="POST">
+    <fieldset>
+      <label for="title">Title:</label> <input type="text" name="title" id="title" tal:attr="value: (title||'')" />
+    </fieldset>
+    <fieldset>
+      <input tal:if="edit" type="hidden" id="id" name="id" tal:attr="value: (id||'')" />
+      <input tal:if="edit" type="hidden" id="edit" name="edit" value="true" />
+      <input type="submit" id="submit" value="Publish" onclick="save(); return false;"/>
+    </fieldset>
+  </form>
+  <script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+  <script type="text/javascript">
+    function save() {
+    var data = {
+    title: $("#title").val()
+    };
+    if ($(#edit).length != 0) {
+    data.edit = true;
+    data.id = $("#id").val();
+    }
+    $.post("AddTopic_save", data,
+    function(d) {
+    window.location="/";
+    });
+    }
+</script>
+</div>

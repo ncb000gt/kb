@@ -1,0 +1,5 @@
+<div xmlns:tal="http://axiomstack.com/tale" id="content" class="content">
+  <h2>Your Search Results</h2>
+  <p tal:if="results.length == 0">No results found. Change your keyword and try again.</p>
+  <ul tal:if="results" tal:replace="this.list_results({'results': results})"> </ul>
+</div>

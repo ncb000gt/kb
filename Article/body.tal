@@ -1,0 +1,5 @@
+<div xmlns:tal="http://axiomstack.com/tale" id="content" class="content">
+  <h2 tal:content="this.title"> </h2>
+  <span tal:content="this.date.format('yyyy/MM/dd')"> </span> - Author: <span tal:content="this.author.getTarget().username"> </span>
+  <div tal:content="this.content" class="article"> </div>
+</div>

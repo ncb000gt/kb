@@ -1,0 +1,6 @@
+<ul xmlns:tal="http://axiomstack.com/tale">
+  <li tal:repeat="item: results">
+    <a tal:attr="href: item.getURI()" tal:content="item.title + '('+item.id+')'"></a>
+    <p tal:content-if="item.description"> </p>
+  </li>
+</ul>

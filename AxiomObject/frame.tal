@@ -1,0 +1,94 @@
+<html xmlns:tal="http://axiomstack.com/tale">
+  <head>
+    <title tal:content="this.genHeadline()"> </title>
+    <link type="text/css" rel="stylesheet" href="/static/css/core.css" />
+    <link type="text/css" rel="stylesheet" href="/static/js/jsTree/tree_component.css" />
+  </head>
+  <body>
+    <div id="header" class="header">
+      <div class="headline">
+	<h1 tal:content="this.genHeadline() || 'KBase'"></h1>
+	<ul class="mini_nav">
+	  <li tal:attr="'class':(session.user instanceof KBUser)?undefined:'last'">
+	    <a href="/Login" tal:if="!(session.user instanceof KBUser)">Login</a>
+	    <span tal:if="session.user instanceof KBUser" tal:text="$">Welcome ${session.user.username}</span>
+	  </li>
+	  <li tal:if="session.user instanceof KBUser" class="last">
+	    <a href="/Logout">Logout</a>
+	  </li>
+	</ul>
+	<form name="search" method="GET" action="/search">
+	  <fieldset>
+	    <label for="s">Keyword:</label> <input type="text" name="s" id="s" tal:attr="value: req.get('s') || ''" />
+	  </fieldset>
+	  <fieldset>
+	    <input type="submit" value="Go" />
+	  </fieldset>
+	</form>
+      </div>
+      <ul class="breadcrumbs" tal:var="crumbs: this.breadcrumbs()" tal:repeat-content="crumb: crumbs">
+	<li>
+	  <a tal:attr="href: crumb.getURI()" tal:content="crumb.title"></a>
+	</li>
+	<li tal:if="!repeat.crumb.last">
+	  &gt;
+	</li>
+      </ul>
+    </div>
+    <div id="navigation">
+      <div id="nav_proper"></div>
+      <div class="options" tal:if="session.user &amp;&amp; session.user.hasRole('Administrator')">
+	<a href="AddContent">Add Content</a>
+      </div>
+    </div>
+    <div tal:replace="content"> </div>
+    <script type="text/javascript" src="/static/js/jsTree/_lib/css.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/jsTree/_lib/jquery.listen.js"></script>
+    <script type="text/javascript" src="/static/js/jsTree/tree_component.js"></script>
+    <script type="text/javascript">
+      var tree = new tree_component();
+      tree.init($("#nav_proper"),
+      { data : 
+      { type : "json", 
+        url: "<span tal:if="this.getURI() != '/'" tal:replace="this.getURI()"/>/getNavigation"
+      },
+      ui: {
+      <span tal:omit="true" tal:if="!(session.user instanceof KBUser)">
+	context: []
+	}
+      </span>
+      <span tal:omit="true" tal:if="session.user instanceof KBUser">
+	rules: { editable: "all" },
+	context: [
+	{
+	id		: "edit",
+	label	: "Edit",
+	icon	: "remove.png",
+	visible	: function (NODE, TREE_OBJ) { return TREE_OBJ.check("editable", NODE); },
+	action	: function (NODE, TREE_OBJ) { window.location="/EditContent?id="+NODE.attr("id"); }
+	},
+	{
+	id		: "delete",
+	label	: "Delete",
+	icon	: "remove.png",
+	visible	: function (NODE, TREE_OBJ) { return TREE_OBJ.check("deletable", NODE); },
+	action	: function (NODE, TREE_OBJ) { NODE.each( function () { TREE_OBJ.remove(this); }); }
+	}
+	]},
+	callback: {
+	ondelete: function(NODE, TREE_OBJ) {
+	$.post("/RemoveContent", {id: NODE.attr("id")},
+	function(data) {
+	if (data == "true")
+	alert("Delete was successful.");
+	else
+	alert("Delete failed.");
+	})
+	}
+	}
+      </span>
+      });
+    </script>
+  </body>
+</html>

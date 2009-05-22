@@ -1,0 +1,8 @@
+<li xmlns:tal="http://axiomstack.com/tale" tal:repeat="item: this._parent.getChildren()">
+  <a tal:attr="href: item.getURI()" tal:content="item.title"></a>
+  <ul tal:if="item == this">
+    <li tal:repeat="item_child: item.getChildren()">
+      <a tal:attr="href: item_child.getURI()" tal:content="item_child.title"></a>
+    </li>
+  </ul>
+</li>

@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Knowledge Base Connector</title>
+    <link rel="stylesheet" type="text/css" href="/static/KBConnector/ext/resources/css/ext-all.css" />
+    <script type="text/javascript" src="/static/KBConnector/ext/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="/static/KBConnector/ext/ext-all.js"></script>
+    <script type="text/javascript" src="/static/KBConnector/test.js"></script>
+  </head>
+  <body>
+    <h1>Axiom Knowledge Base Connector</h1>
+    <form name="search_form" id="search_form" method="GET" action="http://localhost:8080/search">
+      <fieldset>
+	<label for="s">Keyword:</label> <input type="text" name="s" id="s" value="" />
+      </fieldset>
+      <fieldset>
+	<input type="hidden" id="r" name="r" value="1" />
+	<input type="submit" id="search" value="Go" />
+      </fieldset>
+    </form>
+    <div id="results"> </div>
+  </body>
+</html>

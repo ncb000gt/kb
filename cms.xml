@@ -1,0 +1,5 @@
+<cms>
+  <prototypes>
+    <prototype name="Homepage" displayName="Home Page" />
+  </prototypes>
+</cms>
