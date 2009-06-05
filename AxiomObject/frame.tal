@@ -17,7 +17,7 @@
 	    <a href="/Logout">Logout</a>
 	  </li>
 	</ul>
-	<form name="search" method="GET" action="/search">
+	<form name="search" method="get" action="/search">
 	  <fieldset>
 	    <label for="s">Keyword:</label> <input type="text" name="s" id="s" tal:attr="value: req.get('s') || ''" />
 	  </fieldset>
@@ -37,7 +37,7 @@
     </div>
     <div id="navigation">
       <div id="nav_proper"></div>
-      <div class="options" tal:if="session.user &amp;&amp; session.user.hasRole('Administrator')">
+      <div class="options" tal:if="session.user && session.user.hasRole('Administrator')">
 	<a href="AddContent">Add Content</a>
       </div>
     </div>
